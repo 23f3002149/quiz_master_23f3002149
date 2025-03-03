@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start the Quiz</title>
+    <link rel="stylesheet" href="../static/1a_start_test.css">
+
+</head>
+<body>
+    <div class="quiz-container">
+        {%if question%}
+        <div class="header">
+            <span class="question-number">have a nice day</span>
+            <span class="timer" id="timer">Bhai Marzi hai tumhari jitna time lena hai lo.....</span>
+        </div>
+        
+        
+        <form action="/start_test/{{quiz_id}}/{{user}}" method="post">
+            {%for question_details in question%}
+                <div class="question">.....{{question_details.question}}.....</div>
+
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" id="option1" name="{{question_details.question_id}}" value="{{question_details.option_a}}">
+                        <label for="option1">1. {{question_details.option_a}}...</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option2" name="{{question_details.question_id}}" value="{{question_details.option_b}}">
+                        <label for="option2">2. {{question_details.option_b}}...</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option3" name="{{question_details.question_id}}" value="{{question_details.option_c}}">
+                        <label for="option3">3. {{question_details.option_c}}...</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option4" name="{{question_details.question_id}}" value="{{question_details.option_d}}">
+                        <label for="option4">4. {{question_details.option_d}}...</label>
+                    </div>
+                </div>
+                <hr>
+            {%endfor%}
+            <div class="buttons">
+            <button type="button" class="save" onclick="window.location.href='/user_home/{{user}}'" >Cancel</button>
+            <button type="submit" class="submit">Submit</button>
+        </div>
+        </form>
+        
+
+
+        {%else%}
+        <div>No question found</div>
+        {%endif%}
+
+
+
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Management</title>
+    <link rel="stylesheet" href="../static/2_admin_quiz.css">
+</head>
+<body>
+    <div class="header">
+        <div class="nav-links">
+            <a href="/admin_home">Home</a>
+            <a href="/admin_quiz">Quiz</a>
+            <a href="/admin_summary/{{admin}}">Summary</a>
+            <a href="/">Logout</a>
+        </div>
+        <form class="search" action="/search_quiz" method="post">
+            <input type="search" placeholder="Search quiz/chapter" name="search">
+            <button type="submit">Search</button>
+        </form>
+        <div>Welcome {{admin}}</div>
+    </div>
+
+    <div class="container">
+        <h2>Quiz Management</h2>
+     
+        <div class="quiz-section"> 
+            
+            <div class="quiz">
+            {%if quizes%}
+            {%for quiz in quizes%}
+                <h3>Quiz  ( {{quiz.chapter_name}} ) <a href="/delete_quiz/{{quiz.quiz_id}}"><button class="edt">Delete</button"></a></h3>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Q_Title</th>
+                        <th>Question</th>
+                        <th>Action</th>
+                    </tr>
+                    {%if quiz.questions_of_a_quiz_id%}
+                    {%for question in quiz.questions_of_a_quiz_id%}
+                    <tr>
+                        <td>{{question.question_id}}</td>
+                        <td>{{question.question_title}}</td>
+                        <td>{{question.question}}</td>
+                        <td><a href="/edit_question/{{question.question_id}}/{{quiz.chapter_id}}/{{quiz.quiz_id}}"><button class="edit">Edit/Delete</button></a></td>
+                    </tr>
+                    {%endfor%}
+                    {%else%}
+                    <tr>
+                        <td colspan="4">No questions found</td>
+                    </tr>
+                    {%endif%}
+
+                </table>
+                <a href="/add_question/{{quiz.chapter_id}}/{{quiz.quiz_id}}"><div class="add-question">
+                    <button>+ Question</button>
+                </div></a>
+                <br><br>
+                {%endfor%}
+            {%else%}
+            <h2>No quizzes found</h2>
+            {%endif%}   
+                   
+            </div>
+            
+        </div>
+        
+        <div class="footer">
+            <!-- <div>All quizzes here ...</div> -->
+            <a href="/add_newquiz">+ New Quiz</a>
+        </div>
+    </div>
+</body>
+</html>

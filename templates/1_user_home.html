@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+<link rel="stylesheet" href="../static/1_user_home.css">
+</head>
+<body>
+    <div class="header">
+        <div>
+            <a href="/user_home/{{user}}">Home</a>
+            <a href="/score/{{user}}">Scores</a>
+            <a href="/user_summary/{{user}}">Summary</a>
+            <a href="/">Logout</a>
+        </div>
+        <form action="#" method="post">
+            <input type="search" name="search" placeholder="Search">
+            <button type="button">Search</button>
+        </form>
+        <div class="welcome">Welcome {{user}}</div>
+    </div>
+
+    <div class="dashboard">
+        <h2>Upcoming Quizes</h2>
+        <table>
+      
+            <thead>
+                <tr>
+                    <th>Chapter_name</th>
+                    <th>No. of Questions</th>
+                    <th>Date</th>
+                    <th>Duration (hh:mm)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizes %}
+                <tr>
+                    <td>{{quiz.chapter_name}}</td>
+                    <td>{{question_counts[quiz.chapter_id]}}</td>
+                    <td>{{quiz.date_quiz}}</td>
+                    <td>{{quiz.time_duration}}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="/view_details/{{quiz.chapter_id}}/{{user}}"><button class="view-button">View</button></a> 
+                            <a href="/start_test/{{quiz.quiz_id}}/{{user}}"><button class="start-button">Start</button></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+               
+                <tr>
+                    <td colspan="5" class="ellipsis">...</td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</body>
+</html>

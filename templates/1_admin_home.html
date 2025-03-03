@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Dashboard</title>
+    <link rel="stylesheet" href="../static/1_admin_home.css">
+    
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <a href="/admin_home">Home</a> |
+            <a href="/admin_quiz">Quiz</a> |
+            <a href="/admin_summary/{{admin}}">Summary</a> |
+            <a href="/logout">Logout</a>
+        </div>
+        <form action="/search/{{admin}}" method="post"  class="search">
+            <input type="search" class="search-box" placeholder="Search" name="search" id="search_txt">
+            <button type="submit" >Search</button>
+        </form> 
+        <!--
+            <label for="subject_selection">Search</label>
+            <select name="subject_id" id="subject_selection">
+                <option value="" disabled selected> select subject</option>
+                if you use this dropdown then you need to create a new route and new html page 
+                {% for subject in subjects %}
+                
+                <option value="{{subject.subject_id}}" disabled color="red">{{subject.subject_name}}</option>
+                {%for chapter in subject.chapters_of_a_subject_id %}
+                <option value="{{chapter.chapter_id}}">{{chapter.chapter_name}}</option>
+                {% endfor %}
+
+
+                {% endfor %}
+
+
+            </select>
+        
+        -->
+
+        <div class="admin-text">Welcome {{admin}}</div>
+    </div>
+
+    <div class="content">
+        <div class="subject-container">
+            {% if subjects %}
+                {% for subject in subjects %}<!--here the subject is fixed-->
+                    <div class="subject-box">
+                        <h3>{{ subject.subject_name }}  <a href="/edit_subject/{{subject.subject_id}}"> <button class="edit">Edit/Delete</button></a></h3>
+                        
+                        
+                        <table>
+                            <tr>
+                                <th>Chapter name</th>
+                                <th>No. of Questions</th>
+                                <th>Action</th>
+                            </tr>
+                            {% if subject.chapters_of_a_subject_id %}<!--if subject has chapters-->
+                            {% for chapter in subject.chapters_of_a_subject_id %}
+                            <tr>
+                                <td>{{chapter.chapter_name}}</td>
+                                <td>{{question_counts[chapter.chapter_id]}}</td>
+                                <td><a href="/edit_chapter/{{chapter.chapter_id}}"><button class="edit">Edit/Delete</button></a></td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="3" >No chapters found</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                        
+                        <a href="/new_chapter/{{subject.subject_id}}"> <button class="btn-chapter">+ Chapter</button></a>
+                    </div> 
+                {% endfor %}
+            {% else %}
+                <h2>No subjects found</h2>
+            {% endif %}
+        </div>
+    </div>
+    
+    <a href="/new_chapter_1"> <button class="btn-chapter">+ Chapter</button></a>
+    <a href="/new_subject" class="all-subjects">All subjects here ...
+        <div class="add-btn">+</div>
+    </a>
+
+</body>
+</html>
+

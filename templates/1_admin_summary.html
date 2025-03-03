@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="../static/1_admin_summary.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div>
+                <a href="/admin_home">Home</a> | <a href="/admin_quiz">Quiz</a> | <a href="/admin_summary/{{admin}}">Summary</a> | <a href="/">Logout</a>
+            </div>
+            <input type="text" placeholder="Search">
+            <span style="color: blue; font-weight: bold;">Welcome {{admin}}</span>
+        </div>
+        <h2>Summary Charts</h2>
+        <div class="charts-container">
+            <div>
+                <h3>Subject wise top scores</h3>
+                <canvas id="topScoresChart"></canvas>
+            </div>
+            <div>
+                <h3>Subject wise user attempts</h3>
+                <canvas id="userAttemptsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const ctx1 = document.getElementById('topScoresChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Maths (70)', 'Physics (90)', 'Chemistry (80)'],
+                datasets: [{
+                    label: 'Scores',
+                    data: [70, 90, 80],
+                    backgroundColor: ['lightblue', 'green', 'pink']
+                }]
+            }
+        });
+
+        const ctx2 = document.getElementById('userAttemptsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Maths', 'Physics', 'Chemistry'],
+                datasets: [{
+                    data: [30, 50, 70],
+                    backgroundColor: ['red', 'blue', 'green']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

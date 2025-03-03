@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scores</title>
+    <link rel="stylesheet" href="../static/2_score.css">
+</head>
+<body>
+    <div class="scores-container">
+        <div class="header">
+            <div>
+                <a href="/user_home/{{user}}">Home</a>
+                <a href="/score/{{user}}">Scores</a>
+                <a href="/user_summary/{{user}}">Summary</a>
+                <a href="/">Logout</a>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="Search by date/scores">
+                <button>Search</button>
+            </div>
+            <span class="welcome">Welcome {{user}}</span>
+        </div>
+
+        <h2>Quiz Scores</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>QUIZ ID</th>
+                    <th>CHAPTER NAME</th>
+                    <th>No. of Questions</th>
+                    <th>Date</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%if scores%}
+                {%for scores in scores%}
+                <tr>
+                    <td>{{scores.quiz_id}}</td>
+                    <td>{{scores.chapter_name}}</td>
+                    <td>{{scores.no_of_questions}}</td>
+                    <td>{{scores.date}}</td>
+                    <td>{{scores.score}}/{{scores.no_of_questions}}</td>
+                </tr>
+                {%endfor%}
+                {%else%}
+                <tr>
+                    <td colspan="4">No scores found</td>
+                </tr>
+                {%endif%}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <span>...</span>
+        </div>
+    </div>
+</body>
+</html>

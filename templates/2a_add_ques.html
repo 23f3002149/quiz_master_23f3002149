@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Question Form</title>
+    <link rel="stylesheet" href="../static/2a_add_ques.css">
+</head>
+<body>
+    <form action="/add_question/{{chapter_id}}/{{quiz_id}}" method="post">
+    <div class="form-container">
+        <div class="form-header">New Question</div>
+        
+        <div class="form-group">
+            <label for="chapter-id">Chapter ID:</label>
+            <input type="text" id="chapter-id" name="chapter-id" value="{{chapter_id}}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="question-title">Question Title:</label>
+            <input type="text" id="question-title" name="question_title">
+        </div>
+
+        <div class="form-group">
+            <label for="question-statement">Question Statement:</label>
+            <input type="text" id="question-statement" name="question">
+        </div>
+
+        <div class="form-header">Single Option Correct</div>
+        
+        <div class="options">
+            <label for="option1">Option 1:</label>
+            <input type="text" id="option1" name="option_a">
+        </div>
+
+        <div class="options">
+            <label for="option2">Option 2:</label>
+            <input type="text" id="option2" name="option_b">
+        </div>
+
+        <div class="options">
+            <label for="option3">Option 3:</label>
+            <input type="text" id="option3" name="option_c">
+        </div>
+
+        <div class="options">
+            <label for="option4">Option 4:</label>
+            <input type="text" id="option4" name="option_d">
+        </div>
+
+        <div class="form-group">
+            <label for="correct-option">Correct Option:</label>
+            <input type="text" id="correct-option" name="correct_option">
+        </div>
+
+        <div class="buttons">
+            <button class="save" button="submit">Save and Next</button>
+            <button class="close" type="button" onclick="window.location.href='/admin_quiz'">Close</button>
+        </div>
+        <div>{{msg}}</div>
+    </div>
+    </form>
+</body>
+</html>

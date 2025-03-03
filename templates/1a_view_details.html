@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz View</title>
+    <link rel="stylesheet" href="../static/1a_view_details.css">
+</head>
+<body>
+    <div class="container">
+        <h3>View the Quiz</h3>
+        <label>Chapter ID:</label>
+        <span class="input-box">{{chapter_id}}</span>
+        <label>Subject:</label>
+        <span class="input-box">{{subject_name}}</span>
+        <label>Chapter:</label>
+        <span class="input-box">{{quiz.chapter_name}}</span>
+        <label>Number of Questions:</label>
+        <span class="input-box">{{question_counts[quiz.chapter_id]}}</span>
+        <label>Scheduled Date:</label>
+        <span class="input-box">{{quiz.date_quiz}}</span>
+        <label>Duration (hh:mm):</label>
+        <span class="input-box">{{quiz.time_duration}}</span>
+        <br>
+        </a><button class="button" onclick="window.location.href = '/user_home/{{user}}';"  >Close</button>
+    </div>
+</body>
+</html>

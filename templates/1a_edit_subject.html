@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Subject</title>
+    <link rel="stylesheet" href="../static/1a_edit_subject.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Subject</h1>
+        <form action="/edit_only_subject/{{subject.subject_id}}" method="post"><!--it is used to redirect the data to the route to the route which have commands to edit the data-->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="subject_name" value="{{subject.subject_name}}">
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="discription" value="{{subject.discription}}"></textarea>
+            
+            <!-- <div class="note">Note: May include more input fields...</div> -->
+            
+            <div class="buttons">
+                <button type="submit" class="save">Save  </button> 
+                <button type="button" class="delete" onclick="window.location.href='/delete_subject/{{subject.subject_id}}'" >Delete  </button>  <!--now i want to redirect it to  the route which have commands to delete the subject--> 
+                <button type="button" class="cancel" onclick="window.location.href='/admin_home'" >Cancel</button>   <!--The onclick="window.location.href='/admin_home'" in the <button> element means that when the Cancel button is clicked, the browser will navigate to the /admin_home page.-->
+            </div>
+        </form>
+        <div class="message">{{msg}}</div>
+    </div>
+</body>
+</html>

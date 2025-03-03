@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Dashboard</title>
+    <link rel="stylesheet" href="../static/admin_home.css">
+        
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <a href="/admin_home">Home</a> |
+            <a href="/admin_quiz">Quiz</a> |
+            <a href="#">Summary</a> |
+            <a href="/">Logout</a>
+        </div>
+        <input type="text" class="search-box" placeholder="Search">
+        <div class="admin-text">Welcome {{admin}}</div>
+    </div>
+<!--
+   
+    <div class="content">
+        <div class="subject-container">
+            <div class="subject-box">
+                <h3>Physics</h3>
+                <table>
+                    <tr>
+                        <th>Chapter name</th>
+                        <th># of Questions</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>Force</td>
+                        <td>xxxxxx</td>
+                        <td>Edit/Delete</td>
+                    </tr>
+                    <tr>
+                        <td>EMF</td>
+                        <td>xxxxxx</td>
+                        <td>Edit/Delete</td>
+                    </tr>
+                </table>
+                <a href="/new_chapter"> <button class="btn-chapter">+ Chapter</button></a>
+            </div>
+
+            <div class="subject-box">
+                <h3>App Dev-I</h3>
+                <table>
+                    <tr>
+                        <th>Chapter name</th>
+                        <th># of Questions</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>HTML</td>
+                        <td>xxxxxx</td>
+                        <td>Edit/Delete</td>
+                    </tr>
+                    <tr>
+                        <td>CSS</td>
+                        <td>xxxxxx</td>
+                        <td>Edit/Delete</td>
+                    </tr>
+                </table>
+                <a href="/new_chapter"> <button class="btn-chapter">+ Chapter</button></a>
+               
+            </div>
+        </div>
+
+        <a href="/new_subject" class="all-subjects">All subjects here ...<div class="add-btn">+</div></a>
+        
+        
+    </div>
+-->
+<div class="content">
+    
+    <div class="subject-container">
+        {%if subjects%}
+        {% for subject in subjects %}
+        <div class="subject-box">
+            
+            <h3>{{subject.subject_name}}</h3>
+            <table>
+                <tr>
+                    <th>Chapter name</th>
+                    <th># of Questions</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <td>Force</td>
+                    <td>xxxxxx</td>
+                    <td>Edit/Delete</td>
+                </tr>
+                <tr>
+                    <td>EMF</td>
+                    <td>xxxxxx</td>
+                    <td>Edit/Delete</td>
+                </tr>
+            </table>
+            <a href="/new_chapter"> <button class="btn-chapter">+ Chapter</button></a>
+         
+        </div> 
+
+        {% endfor %}
+        {%else%}
+        <h2>No subjects found</h2>
+       
+        {%endif%}
+    </div>
+    </div>
+
+    <a href="/new_subject" class="all-subjects">All subjects here ...<div class="add-btn">+</div></a>
+    
+    
+</div>
+</body>
+</html>

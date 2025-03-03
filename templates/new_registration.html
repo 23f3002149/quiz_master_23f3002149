@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master Registration</title>
+    <link rel="stylesheet" href="../static/new_registration.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Welcome to Quiz Master</h2>
+        <p class="register-text">Registration</p>
+
+        <form action="/new_registration" method="post">
+            <label for="first">User name (E-mail):</label>
+            <input id="first" name="email_username" type="email" required><br><!--here the name should be same as what is present in database table-->
+
+            <label for="second">Password:</label>
+            <input id="second" name="password" type="password" required><br>
+
+            <label for="third">Full name:</label>
+            <input id="third" name="Full_name" type="text" required><br>
+
+            <label for="fourth">Qualification:</label>
+            <input id="fourth" name="qualification" type="text" required><br>
+
+            <label for="fifth">Date of Birth:</label>
+            <input id="fifth" name="date_of_birth" type="date" required><br>
+
+            <button type="submit" class="btn-submit">Submit</button>
+            <a href="/" class="existing-user">Existing user?</a>
+        </form>
+        <div class="message">{{msg}}</div>
+    </div>
+
+</body>
+</html>

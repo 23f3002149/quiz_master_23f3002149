@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="../static/1_user_summary.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div>
+                <a href="/user_home/{{user}}">Home</a> | <a href="/score/{{user}}">Scores</a> | <a href="/user_summary/{{user}}">Summary</a> | <a href="/">Logout</a>
+            </div>
+            <input type="text" placeholder="Search">
+            <span style="color: blue; font-weight: bold;">Welcome {{user}}</span>
+        </div>
+        <h2>Summary Charts</h2>
+        <div class="charts-container">
+            <div>
+                <h3>Subject wise no. of quizzes</h3>
+                <canvas id="subjectQuizzesChart"></canvas>
+            </div>
+            <div>
+                <h3>Month wise no. of quizzes attempted</h3>
+                <canvas id="monthQuizzesChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const ctx1 = document.getElementById('subjectQuizzesChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Maths', 'Physics', 'Chemistry'],
+                datasets: [{
+                    label: 'Number of Quizzes',
+                    data: [5, 8, 6],
+                    backgroundColor: ['lightblue', 'green', 'pink']
+                }]
+            }
+        });
+
+        const ctx2 = document.getElementById('monthQuizzesChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['January', 'February', 'March'],
+                datasets: [{
+                    data: [3, 2, 1],
+                    backgroundColor: ['#f99', '#faa', '#fbb']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

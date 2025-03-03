@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master Login</title>
+    <link rel="stylesheet" href="../static/login.css">
+</head>
+<body>
+
+    <div class="contain">
+        <h2>Welcome to Quiz Master</h2>
+        <p class="login-text">Login</p>
+
+        <form action="/" method="post"><!--action means where(to which route) to send the data of the form and method is post --> 
+            <label for="first">Username (E-mail) :</label>
+            <input type="email" required id="first" name="username"><br>
+
+            <label for="second">Password :</label>
+            <input name="password" id="second" type="password" required><br>
+
+            <button type="submit" class="btn-login">Login</button>
+            <a href="/new_registration" class="create-account">Create new user?</a>
+        </form>
+        <div class="messag">{{msg}}</div>
+        <div class="message">{{mesg}}</div>
+    </div>
+
+</body>
+</html>
