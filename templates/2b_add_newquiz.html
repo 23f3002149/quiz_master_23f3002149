@@ -4,7 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Quiz Form</title>
-    <link rel="stylesheet" href="../static/2b_add_newquiz.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .form-container {
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        .form-header {
+            text-align: center;
+            font-weight: bold;
+            color: #ff8000;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .note {
+            font-size: 0.9em;
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .cancel {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <div class="form-container">
@@ -14,7 +85,7 @@
             <!-- <label for="chapter-id">Chapter ID:</label>
             <input type="text" id="chapter-id" name="chapter_id"> -->
             <label for="first">Select chapter for quiz :</label>
-            <select name="chapter_id" id="first">
+            <select name="chapter_id" id="first" required>
             <option value="" disabled selected> select chapter</option>
             {% for chapter in chapter %}    
             <option value="{{chapter.chapter_id}}">{{chapter.chapter_name}}</option>
@@ -24,12 +95,12 @@
 
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date_quiz" placeholder="dd/mm/yyyy">
+            <input type="date" id="date" name="date_quiz" placeholder="dd/mm/yyyy" required>
         </div>
 
         <div class="form-group">
             <label for="duration">Duration:</label>
-            <input type="time" id="duration" name="time_duration" placeholder="hh:mm">
+            <input type="time" id="duration" name="time_duration" placeholder="hh:mm" required>
         </div>
 
         <!-- <div class="note">Note: May include more input fields...</div> -->

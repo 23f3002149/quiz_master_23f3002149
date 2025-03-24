@@ -4,7 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Question Form</title>
-    <link rel="stylesheet" href="../static/2a_edit_question.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .form-container {
+            width: 400px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            font-weight: bold;
+            color: #ff8000;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .options {
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .close {
+            background-color: #4949f8;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+        .buttons button.delete {
+            background-color: #fb1504;
+            color: white;
+        }
+        
+    </style>
 </head>
 <body>
     <form action="/edit_question/{{question.question_id}}/{{chapter_id}}/{{quiz_id}}" method="post">
@@ -18,39 +91,39 @@
 
         <div class="form-group">
             <label for="question-title">Question Title:</label>
-            <input type="text" id="question-title" name="question_title" value="{{question.question_title}}">
+            <input type="text" id="question-title" name="question_title" value="{{question.question_title}}" required>
         </div>
 
         <div class="form-group">
             <label for="question-statement">Question Statement:</label>
-            <input type="text" id="question-statement" name="question" value="{{question.question}}">
+            <input type="text" id="question-statement" name="question" value="{{question.question}}" required>
         </div>
 
         <div class="form-header">Single Option Correct</div>
         
         <div class="options">
             <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option_a" value="{{question.option_a}}">
+            <input type="text" id="option1" name="option_a" value="{{question.option_a}}" required>
         </div>
 
         <div class="options">
             <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option_b" value="{{question.option_b}}">
+            <input type="text" id="option2" name="option_b" value="{{question.option_b}}" required>
         </div>
 
         <div class="options">
             <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option_c" value="{{question.option_c}}">
+            <input type="text" id="option3" name="option_c" value="{{question.option_c}}" required>
         </div>
 
         <div class="options">
             <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option_d" value="{{question.option_d}}">
+            <input type="text" id="option4" name="option_d" value="{{question.option_d}}" required>
         </div>
 
         <div class="form-group">
             <label for="correct-option">Correct Option:</label>
-            <input type="text" id="correct-option" name="correct_option" value="{{question.correct_option}}">
+            <input type="text" id="correct-option" name="correct_option" value="{{question.correct_option}}" required>
         </div>
 
         <div class="buttons">

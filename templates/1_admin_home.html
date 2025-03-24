@@ -5,8 +5,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Dashboard</title>
-    <link rel="stylesheet" href="../static/1_admin_home.css">
-    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #f3f3f3;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ccc;
+        }
+        .header a {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .header .search-box {
+            padding: 5px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            outline: none;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        
+        }
+        .header .admin-text {
+            color: blue;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+           
+        }
+        .subject-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .subject-box {
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+            width: 300px;
+            text-align: left;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .subject-box h3 {
+            text-align: center;
+            color: #337ab7;
+        }
+        .subject-box table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .subject-box th {
+            background-color: #ddd;
+            color: #337ab7;
+            padding: 5px;
+            text-align: left;
+        }
+        .subject-box td {
+            padding: 5px;
+            border-bottom: 1px solid #ccc;
+        }
+        .btn-chapter {
+            margin-top: 10px;
+            background-color: #ff8080;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        .all-subjects {
+            margin-top: 20px;
+            font-size: 18px;
+            color: blue;
+            text-align: center;
+            text-decoration: none;
+        }
+        .add-btn {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: orange;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .edit{
+            background-color: #09f6d6cd;
+            color: #f50303;
+            cursor: pointer;
+        }
+       
+    </style>
 </head>
 <body>
 

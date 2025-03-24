@@ -4,7 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Chapter</title>
-    <link rel="stylesheet" href="../static/1b_edit_chapter.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            text-align: center;
+            color: orange;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .buttons button {
+            width: 45%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .buttons button.save {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .buttons button.cancel {
+            background-color: #4949f8;
+            color: white;
+        }
+        .buttons button.delete {
+            background-color: #fb1504;
+            color: white;
+        }
+        .note {
+            color: red;
+            font-style: italic;
+            margin-top: 15px;
+            text-align: center;
+        }
+        .message {
+            color: rgb(119, 7, 7);
+            font-weight: bold;
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">

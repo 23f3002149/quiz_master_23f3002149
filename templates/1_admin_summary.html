@@ -5,7 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Summary Charts</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="../static/1_admin_summary.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .navbar {
+            background-color: lightblue;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px;
+        }
+        .navbar a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+        .navbar input {
+            padding: 5px;
+        }
+        h2 {
+            color: blue;
+        }
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        canvas {
+            max-width: 300px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
