@@ -3,101 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .navbar {
-            background-color: lightblue;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 8px;
-        }
-        .navbar a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: green;
-            font-weight: bold;
-        }
-        .navbar input {
-            padding: 5px;
-        }
-        h2 {
-            color: blue;
-        }
-        .charts-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        canvas {
-            max-width: 300px;
-        }
-    </style>
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/1_user_summary.css">
 </head>
 <body>
-    <div class="container">
-        <div class="navbar">
-            <div>
-                <a href="/user_home/{{user}}">Home</a> | <a href="/score/{{user}}">Scores</a> | <a href="/user_summary/{{user}}">Summary</a> | <a href="/">Logout</a>
-            </div>
-            <input type="text" placeholder="Search">
-            <span style="color: blue; font-weight: bold;">Welcome {{user}}</span>
-        </div>
-        <h2>Summary Charts</h2>
-        <div class="charts-container">
-            <div>
-                <h3>Subject wise no. of quizzes</h3>
-                <canvas id="subjectQuizzesChart"></canvas>
-            </div>
-            <div>
-                <h3>Month wise no. of quizzes attempted</h3>
-                <canvas id="monthQuizzesChart"></canvas>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        const ctx1 = document.getElementById('subjectQuizzesChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['Maths', 'Physics', 'Chemistry'],
-                datasets: [{
-                    label: 'Number of Quizzes',
-                    data: [5, 8, 6],
-                    backgroundColor: ['lightblue', 'green', 'pink']
-                }]
-            }
-        });
+   
 
-        const ctx2 = document.getElementById('monthQuizzesChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'pie',
-            data: {
-                labels: ['January', 'February', 'March'],
-                datasets: [{
-                    data: [3, 2, 1],
-                    backgroundColor: ['#f99', '#faa', '#fbb']
-                }]
-            }
-        });
-    </script>
+ 
+    <div class="header">
+        <div>
+            <a href="/user_home/{{user_id}}">Home</a>
+            <a href="/score/{{user_id}}">Scores</a>
+            <a href="/user_summary/{{user_id}}">Summary</a>
+            <a href="/">Logout</a>
+        </div>
+        
+        <div class="welcome">Welcome {{user}}</div>
+    </div>
+
+    <div class="dashboard">
+   
+        <h2>User Summary</h2>
+        <p>Total Quizzes Attempted: {{ total_quizzes }}</p>
+        <p>Average Score: {{ avg_score }}</p>
+    
+        <h2>Performance Over Time</h2>
+        <img src="/static/images/user_line_chart.png" alt="Performance Over Time">
+
+        <h2>Correct vs Incorrect Answers</h2>
+        <img src="/static/images/user_pie_chart.png" alt="Correct vs Incorrect Answers">
+
+              
+    </div>
+
+    
 </body>
 </html>

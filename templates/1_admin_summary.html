@@ -3,101 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summary Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .navbar {
-            background-color: lightblue;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 8px;
-        }
-        .navbar a {
-            margin: 0 10px;
-            text-decoration: none;
-            color: green;
-            font-weight: bold;
-        }
-        .navbar input {
-            padding: 5px;
-        }
-        h2 {
-            color: blue;
-        }
-        .charts-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        canvas {
-            max-width: 300px;
-        }
-    </style>
+    <title>Quiz Management</title>
+    <link rel="stylesheet" href="/static/css/1_admin_summary.css">
 </head>
 <body>
-    <div class="container">
-        <div class="navbar">
-            <div>
-                <a href="/admin_home">Home</a> | <a href="/admin_quiz">Quiz</a> | <a href="/admin_summary/{{admin}}">Summary</a> | <a href="/">Logout</a>
-            </div>
-            <input type="text" placeholder="Search">
-            <span style="color: blue; font-weight: bold;">Welcome {{admin}}</span>
+    <div class="header">
+        <div class="nav-links">
+            <a href="/admin_home">Home</a>
+            <a href="/admin_quiz">Quiz</a>
+            <a href="/admin_summary">Summary</a>
+            <a href="/">Logout</a>
         </div>
-        <h2>Summary Charts</h2>
-        <div class="charts-container">
-            <div>
-                <h3>Subject wise top scores</h3>
-                <canvas id="topScoresChart"></canvas>
-            </div>
-            <div>
-                <h3>Subject wise user attempts</h3>
-                <canvas id="userAttemptsChart"></canvas>
-            </div>
-        </div>
+       
+        <div>Welcome {{admin}}</div>
     </div>
-    
-    <script>
-        const ctx1 = document.getElementById('topScoresChart').getContext('2d');
-        new Chart(ctx1, {
-            type: 'bar',
-            data: {
-                labels: ['Maths (70)', 'Physics (90)', 'Chemistry (80)'],
-                datasets: [{
-                    label: 'Scores',
-                    data: [70, 90, 80],
-                    backgroundColor: ['lightblue', 'green', 'pink']
-                }]
-            }
-        });
+    <h2 style="text-align: center;" color="#007BFF">Admin Summary Page</h2>
+    <div class="container">
+        
+     
+     
+        <h3>Most Attempted Quizzes</h3>
+        <img src="{{bar_chart}}" alt="Most Attempted Quizzes">
+        
+        <h3>Average Score per Quiz</h3>
+        <img src="{{avg_chart}}" alt="Average Score per Quiz">
 
-        const ctx2 = document.getElementById('userAttemptsChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: ['Maths', 'Physics', 'Chemistry'],
-                datasets: [{
-                    data: [30, 50, 70],
-                    backgroundColor: ['red', 'blue', 'green']
-                }]
-            }
-        });
-    </script>
+
+
+
+    </div>
 </body>
 </html>

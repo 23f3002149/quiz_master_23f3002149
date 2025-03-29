@@ -4,93 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start the Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-        }
-
-        .quiz-container {
-            width: 400px;
-            margin: 0 auto;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .header span {
-            font-weight: bold;
-        }
-
-        .question {
-            margin-bottom: 20px;
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .options {
-            margin-bottom: 20px;
-        }
-
-        .option {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .option input {
-            margin-right: 10px;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .save {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .submit {
-            background-color: #28a745;
-            color: white;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .timer {
-            background-color: #e0f7fa;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        .question-number {
-            background-color: #f0f4c3;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-    </style>
-
+    <link rel="stylesheet" href="/static/css/1a_start_test.css">
 </head>
 <body>
     <div class="quiz-container">
@@ -99,9 +13,8 @@
             <span class="question-number">have a nice day</span>
             <span class="timer" id="timer">Bhai Marzi hai tumhari jitna time lena hai lo.....</span>
         </div>
-        
-        
-        <form action="/start_test/{{quiz_id}}/{{user}}" method="post">
+
+        <form action="/start_test/{{quiz_id}}/{{user_id}}" method="post">
             {%for question_details in question%}
                 <div class="question">.....{{question_details.question}}.....</div>
 
@@ -126,7 +39,7 @@
                 <hr>
             {%endfor%}
             <div class="buttons">
-            <button type="button" class="save" onclick="window.location.href='/user_home/{{user}}'" >Cancel</button>
+            <button type="button" class="save" onclick="window.location.href='/user_home/{{user_id}}'" >Cancel</button>
             <button type="submit" class="submit">Submit</button>
         </div>
         </form>
