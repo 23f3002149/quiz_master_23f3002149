@@ -30,43 +30,6 @@ class Admin_User_Details(db.Model):
     #now through user id we want to get all the details of scores of that user id
     scores_of_a_userid = db.relationship('Scores', cascade='all, delete', backref='admin_user_details', lazy=True)#name of the backrefrence is scores_of_a_userid#we say this is linked to the scores table#cascade means if a id gets deleted here delete all the data of scores linked to that id#backref=admin_user_details means the current table or the table to which it is backrefrencing#loading style is lazy()
    #cascade means if master is removed all the child will get removed
-    # Add other columns as needed
-# you said :# class User(db.Model): Defines a table named user.
-# then why we use this command : __tablename__ = 'admin_user_details' to create table name
-# ChatGPT said:
-# ChatGPT
-# Good question! Let me clarify the difference.
-
-# Default Table Naming in SQLAlchemy
-# By default, Flask-SQLAlchemy automatically generates the table name based on the lowercase version of the class name.
-
-# For example:
-
-# python
-# Copy
-# Edit
-# class User(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-# Here, the default table name will be user (lowercase of class name).
-# Custom Table Naming with __tablename__
-# If you want to give the table a specific name (not the default lowercase class name), you use the __tablename__ attribute.
-
-# Example:
-
-# python
-# Copy
-# Edit
-# class AdminUserDetails(db.Model):
-#     __tablename__ = 'admin_user_details'  # Custom table name
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     username = db.Column(db.String(80), unique=True, nullable=False)
-# Even though the class name is AdminUserDetails, the table name in the database will be admin_user_details.
-# When to Use __tablename__
-# If you are fine with Flask-SQLAlchemy’s default naming, you don’t need __tablename__.
-# If you want a specific table name, use __tablename__.
-
-
 #creating 2nd entity(second_table)(subjects)
 class Subjects(db.Model):
     __tablename__ = 'subjects'

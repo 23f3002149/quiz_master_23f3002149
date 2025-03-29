@@ -214,23 +214,7 @@ def admin_quiz():
 @app.route("/score/<int:user_id>")
 def score(user_id):
     user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
-    scores=Scores.query.filter_by(user_id=user_id).all()
-    # #date to the quiz id 
-    # date={}
-    # for score in scores:
-    #     date[score.quiz_id]=Quiz.query.filter_by(quiz_id=score.quiz_id).first().date_quiz
-    
-    # #no.of questions to the quiz id
-    # no_of_questions={}
-    # for score in scores:
-    #     no_of_questions[score.quiz_id]=Questions.query.filter_by(quiz_id=score.quiz_id).count()
-    
-    #chapter name to the quiz id
-    # chapter_name={}
-    # for score in scores:
-    #     chapter_id=Quiz.query.filter_by(quiz_id=score.quiz_id).first().chapter_id
-    #     chapter_name[score.quiz_id]=Chapters.query.filter_by(chapter_id=chapter_id).first().chapter_name
-    
+    scores=Scores.query.filter_by(user_id=user_id).all()    
     return render_template("2_score.html",user=user,scores=scores,user_id=user_id)
     
 @app.route("/add_question/<int:chapter_id>/<int:quiz_id>",methods=["GET","POST"])

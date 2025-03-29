@@ -21,25 +21,6 @@
             <input type="search" class="search-box" placeholder="Search chapter/subject" name="search" id="search_txt">
             <button type="submit" >Search</button>
         </form> 
-        <!--
-            <label for="subject_selection">Search</label>
-            <select name="subject_id" id="subject_selection">
-                <option value="" disabled selected> select subject</option>
-                if you use this dropdown then you need to create a new route and new html page 
-                {% for subject in subjects %}
-                
-                <option value="{{subject.subject_id}}" disabled color="red">{{subject.subject_name}}</option>
-                {%for chapter in subject.chapters_of_a_subject_id %}
-                <option value="{{chapter.chapter_id}}">{{chapter.chapter_name}}</option>
-                {% endfor %}
-
-
-                {% endfor %}
-
-
-            </select>
-        
-        -->
 
         <div class="admin-text">Welcome {{admin}}</div>
     </div>
