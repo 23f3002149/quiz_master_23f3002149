@@ -7,6 +7,11 @@ from backend.models import * # to check the database and match the username and 
 # like ticket_app= Flask(__name__, template_folder="../templates")
 # app = Flask(__name__, template_folder="../templates")  # Fix path issue,,sir ne ye line nahi likhi hai
 from sqlalchemy import func
+from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import os
 
 
 @app.route("/" , methods=["GET","POST"])#by default the method is get but if u want to post then u can write post
@@ -22,8 +27,8 @@ def login():
             
             return redirect(url_for("home"))#if admin exists then render admin home
         elif usr and usr.role==1:
-            username=usr.Full_name            
-            return redirect(url_for("user_home" , user=username))
+            user_id=usr.id           
+            return redirect(url_for("user_home" , user_id=user_id))
         else:
             return render_template("login.html",msg="Invalid Username or Password")
     return render_template("login.html",msg="")# If GET request  show login page,you can write it in the starting of the code also before if statement.
@@ -62,8 +67,10 @@ def home():
     return render_template("1_admin_home.html",subjects=subjects,admin=admin_name,question_counts=question_counts)
     
 
-@app.route("/user_home/<string:user>")
-def user_home(user):
+@app.route("/user_home/<int:user_id>")
+def user_home(user_id):
+    #username
+    user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
     subjects=Subjects.query.all()
     question_counts = {}
     subject=Subjects.query.all()
@@ -73,7 +80,7 @@ def user_home(user):
             count = Questions.query.filter_by(chapter_id=chapter.chapter_id).count()
             question_counts[chapter.chapter_id] = count # Store count for each chapter and creating dictionary
     quiz_details=Quiz.query.all()
-    return render_template("1_user_home.html",user=user,quizes=quiz_details,question_counts=question_counts)
+    return render_template("1_user_home.html",user=user,quizes=quiz_details,question_counts=question_counts,user_id=user_id)
 
 
 @app.route("/new_subject" , methods=["GET","POST"])
@@ -94,64 +101,72 @@ def new_subject():
             return redirect(url_for("home"))
     return render_template("1a_new_subject.html")
 
-@app.route("/start_test/<int:quiz_id>/<string:user>",methods=["GET","POST"])
-def start_test(quiz_id,user):
+@app.route("/start_test/<int:quiz_id>/<int:user_id>",methods=["GET","POST"])
+def start_test(quiz_id,user_id):
+    user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
     if request.method == "POST":
         user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
         # scores=Scores.query.filter_by(user_id=user_id).all()
         #total_score=Questions.query.filter_by(quiz_id=quiz_id).count()
         score_id_check=Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).first()
-        if score_id_check:
-            #i will update the old marks
-            user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
-            score=0
-            questions=Questions.query.filter_by(quiz_id=quiz_id).all()
-            for question in questions:
-                user_answer=request.form.get(str(question.question_id))
-                if user_answer==question.correct_option:
-                    score=score+1
-            quiz_id=quiz_id
-            user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
-            #Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).update({"score":score})
-            score=score
-            date=Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).first().date
-            no_of_questions=Scores.query.filter_by(quiz_id=quiz_id).first().no_of_questions
-            chapter_name=Scores.query.filter_by(quiz_id=quiz_id).first().chapter_name
-            score_table=Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).first()
-            score_table.quiz_id=quiz_id
-            score_table.user_id=user_id
-            score_table.score=score
-            score_table.chapter_name=chapter_name
-            score_table.date=date
-            score_table.no_of_questions=no_of_questions
-            db.session.commit()
-            return redirect(url_for("score" , user=user))
+        # if score_id_check:
+        #     #i will update the old marks
+        #     user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
+        #     score=0
+        #     questions=Questions.query.filter_by(quiz_id=quiz_id).all()
+        #     for question in questions:
+        #         user_answer=request.form.get(str(question.question_id))
+        #         if user_answer==question.correct_option:
+        #             score=score+1
+        #     quiz_id=quiz_id
+        #     user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
+        #     #Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).update({"score":score})
+        #     score=score
+        #     date=Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).first().date
+        #     no_of_questions=Scores.query.filter_by(quiz_id=quiz_id).first().no_of_questions
+        #     chapter_name=Scores.query.filter_by(quiz_id=quiz_id).first().chapter_name
+        #     score_table=Scores.query.filter_by(quiz_id=quiz_id,user_id=user_id).first()
+        #     score_table.quiz_id=quiz_id
+        #     score_table.user_id=user_id
+        #     score_table.score=score
+        #     score_table.chapter_name=chapter_name
+        #     # score_table.date=date
+        #     # date_object = datetime.strptime(date_string, "%Y-%m-%d").date()
+        #     date_of_submission=(datetime.today().strftime('%Y-%m-%d'))
+        #     score_table.date=date_of_submission
+        #     score_table.no_of_questions=no_of_questions
+        #     db.session.commit()
+        #     return redirect(url_for("score" , user_id=user_id))
 
-        else:
+        # else:
             #no.of questions
-            no_of_questions = Questions.query.filter_by(quiz_id=quiz_id).count()
-            score=0
-            quiz_id=quiz_id
-            user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
-            questions=Questions.query.filter_by(quiz_id=quiz_id).all()
-            chapter_id=Questions.query.filter_by(quiz_id=quiz_id).first().chapter_id
-            chapter_name=Chapters.query.filter_by(chapter_id=chapter_id).first().chapter_name
-            date=Quiz.query.filter_by(quiz_id=quiz_id).first().date_quiz
-            no_of_questions=no_of_questions
-           
-            for question in questions:
-                user_answer=request.form.get(str(question.question_id))
-                if user_answer==question.correct_option:
-                    score=score+1
-            score_obj=Scores(quiz_id=quiz_id,user_id=user_id,score=score,chapter_name=chapter_name,date=date,no_of_questions=no_of_questions)
-            db.session.add(score_obj)
-            db.session.commit()
-            return redirect(url_for("score",user=user))
+        no_of_questions = Questions.query.filter_by(quiz_id=quiz_id).count()
+        score=0
+        quiz_id=quiz_id
+        user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
+        questions=Questions.query.filter_by(quiz_id=quiz_id).all()
+        chapter_id=Questions.query.filter_by(quiz_id=quiz_id).first().chapter_id
+        chapter_name=Chapters.query.filter_by(chapter_id=chapter_id).first().chapter_name
+        # date=Quiz.query.filter_by(quiz_id=quiz_id).first().date_quiz
+        # date_object = datetime.strptime(date_string, "%Y-%m-%d").date()
+        submission_date=datetime.now()
+        date=(submission_date.strftime('%Y-%m-%d '))
+        no_of_questions=no_of_questions
+        
+        for question in questions:
+            user_answer=request.form.get(str(question.question_id))
+            if user_answer==question.correct_option:
+                score=score+1
+        score_obj=Scores(quiz_id=quiz_id,user_id=user_id,score=score,chapter_name=chapter_name,date=date,no_of_questions=no_of_questions)
+        db.session.add(score_obj)
+        db.session.commit()
+        return redirect(url_for("score",user_id=user_id))
     question=Questions.query.filter_by(quiz_id=quiz_id).all()
-    return render_template("1a_start_test.html" , question=question,user=user,quiz_id=quiz_id)
+    return render_template("1a_start_test.html" ,user_id=user_id, question=question,user=user,quiz_id=quiz_id)
 
-@app.route("/view_details/<int:chapter_id>/<string:user>")
-def view_details(chapter_id,user):
+@app.route("/view_details/<int:chapter_id>/<int:user_id>")
+def view_details(chapter_id,user_id):
+    user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
     chapter=Chapters.query.filter_by(chapter_id=chapter_id).first()
     quiz=Quiz.query.filter_by(chapter_id=chapter_id).first()
     subject_id=chapter.subject_id
@@ -165,7 +180,7 @@ def view_details(chapter_id,user):
         for chapter in subject.chapters_of_a_subject_id:
             count = Questions.query.filter_by(chapter_id=chapter.chapter_id).count()
             question_counts[chapter.chapter_id] = count # Store count for each chapter and creating dictionary
-    return render_template("1a_view_details.html",chapter_id=chapter_id,chapter=chapter,quiz=quiz,subject_name=subject_name,user=user,question_counts=question_counts)
+    return render_template("1a_view_details.html",user_id=user_id,chapter_id=chapter_id,chapter=chapter,quiz=quiz,subject_name=subject_name,user=user,question_counts=question_counts)
 
 @app.route("/new_chapter/<int:subject_id>" ,methods=["GET","POST"])
 def new_chapter(subject_id):
@@ -196,9 +211,9 @@ def admin_quiz():
     user=Admin_User_Details.query.filter_by(role=0).first()
     return render_template("2_admin_quiz.html",admin=user.Full_name,quizes=quiz,chapters=chapters)
 
-@app.route("/score/<string:user>")
-def score(user):
-    user_id=Admin_User_Details.query.filter_by(Full_name=user).first().id
+@app.route("/score/<int:user_id>")
+def score(user_id):
+    user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
     scores=Scores.query.filter_by(user_id=user_id).all()
     # #date to the quiz id 
     # date={}
@@ -216,7 +231,7 @@ def score(user):
     #     chapter_id=Quiz.query.filter_by(quiz_id=score.quiz_id).first().chapter_id
     #     chapter_name[score.quiz_id]=Chapters.query.filter_by(chapter_id=chapter_id).first().chapter_name
     
-    return render_template("2_score.html",user=user,scores=scores)
+    return render_template("2_score.html",user=user,scores=scores,user_id=user_id)
     
 @app.route("/add_question/<int:chapter_id>/<int:quiz_id>",methods=["GET","POST"])
 def add_question(chapter_id,quiz_id):
@@ -445,22 +460,146 @@ def search_quiz():
         return render_template("2_admin_quiz.html",  quizes=Quiz.query.all(),chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
     return render_template("2_admin_quiz.html",  quizes=Quiz.query.all(),chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
 
+@app.route("/user_summary/<int:user_id>")
+def user_summary(user_id):
+    # Calculate user summary
+    # user = Admin_User_Details.query.get(session[user_id])
+    user=Admin_User_Details.query.filter_by(id=user_id).first()
+    user_name=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+    scores = Scores.query.filter_by(user_id=user.id).all()
+    total_quizzes = len(scores)
+    avg_score = sum(score.score for score in scores) / total_quizzes if total_quizzes > 0 else 0
+    
+    # Score trend over time (Line Chart)
+    dates = [score.date for score in scores]
+    scores_list = [score.score for score in scores]
+    plt.figure(figsize=(7, 4))
+    plt.plot(dates, scores_list, marker='o', linestyle='-', color='b')
+    plt.xlabel('Date')
+    plt.ylabel('Score')
+    plt.title('Performance Over Time')
+    user_line_chart = "static/images/user_line_chart.png"
+    plt.savefig(user_line_chart)
+    plt.close()
+    
+    # Correct vs Incorrect Answers (Pie Chart)
+    total_questions = sum(score.no_of_questions for score in scores)
+    total_correct = sum(score.score for score in scores)
+    total_incorrect = total_questions - total_correct
+    plt.figure(figsize=(7, 4))
+    plt.pie([total_correct, total_incorrect], labels=['Correct', 'Incorrect'], autopct='%1.1f%%', colors=['green', 'red'])
+    plt.title('Correct vs Incorrect Answers')
+    user_pie_chart = "static/images/user_pie_chart.png"
+    plt.savefig(user_pie_chart)
+    plt.close()
+    
+    return render_template("1_user_summary.html",user=user_name,user_id=user_id, total_quizzes=total_quizzes, avg_score=avg_score, user_line_chart=user_line_chart, user_pie_chart=user_pie_chart)
 
-@app.route("/admin_summary/<string:admin>")
-def admin_summary(admin):
-    return render_template("1_admin_summary.html",admin=admin)
+@app.route("/admin_summary")
+def admin_summary():
+    
+    all_scores = Scores.query.all()
+    quiz_attempts = {}
+    avg_scores = {}
+    
+    for score in all_scores:
+        quiz_attempts[score.quiz_id] = quiz_attempts.get(score.quiz_id, 0) + 1
+        avg_scores[score.quiz_id] = avg_scores.get(score.quiz_id, [])
+        avg_scores[score.quiz_id].append(score.score)
+    
+    avg_scores_final = {quiz_id: sum(scores) / len(scores) for quiz_id, scores in avg_scores.items()}
+    quiz_names = [Quiz.query.filter_by(quiz_id=qid).first().chapter_name for qid in avg_scores_final.keys()]
+    
+    # Most attempted quizzes (Bar Chart)
+    plt.figure(figsize=(5, 4))
+    plt.bar(quiz_names, quiz_attempts.values(), color='blue')
+    plt.xlabel('Quiz')
+    plt.ylabel('Attempts')
+    plt.title('Most Attempted Quizzes')
+    # plt.xticks(rotation=35)
+    admin_bar_chart = "static/images/admin_bar_chart.png"
+    plt.savefig(admin_bar_chart)
+    plt.close()
+    
+    # Average score per quiz (Bar Chart)
+    plt.figure(figsize=(5, 4))
+    plt.bar(quiz_names, avg_scores_final.values(), color='orange')
+    plt.xlabel('Quiz')
+    plt.ylabel('Average Score')
+    plt.title('Average Score Per Quiz')
+    # plt.xticks(rotation=45)
+    admin_avg_chart = "static/images/admin_avg_chart.png"
+    plt.savefig(admin_avg_chart)
+    plt.close()
+    user=Admin_User_Details.query.filter_by(role=0).first()
+    return render_template("1_admin_summary.html",admin=user.Full_name, bar_chart=admin_bar_chart, avg_chart=admin_avg_chart)
+
+# userhome pe search lagana hai on the basis of quiz(chaptername)
+@app.route("/search_user_home/<int:user_id>",methods=["GET","POST"])
+def search_user_home(user_id):
+    if request.method == "POST":
+        search = request.form.get("search")
+        # search_of_quiz=Quiz.query.join(Chapters).filter(Chapters.chapter_name.contains(search)).all()#searching the quiz containing quiz name
+        search_of_quiz=Quiz.query.filter(Quiz.chapter_name.contains(search)).all()
+        #search by date
+        search_of_quiz_date=Quiz.query.filter(Quiz.date_quiz.contains(search)).all()
+        quiz=search_of_quiz
+        if quiz:
+            user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+            subjects=Subjects.query.all()
+            question_counts = {}
+            subject=Subjects.query.all()
+            chapter=Chapters.query.all()
+            for subject in subjects:
+                for chapter in subject.chapters_of_a_subject_id:
+                    count = Questions.query.filter_by(chapter_id=chapter.chapter_id).count()
+                    question_counts[chapter.chapter_id] = count #
+            return render_template("1_user_home.html",quizes=quiz,user_id=user_id,user=user,question_counts=question_counts)
+        elif search_of_quiz_date:
+            user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+            user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+            subjects=Subjects.query.all()
+            question_counts = {}
+            subject=Subjects.query.all()
+            chapter=Chapters.query.all()
+            for subject in subjects:
+                for chapter in subject.chapters_of_a_subject_id:
+                    count = Questions.query.filter_by(chapter_id=chapter.chapter_id).count()
+                    question_counts[chapter.chapter_id] = count #
+            return render_template("1_user_home.html",quizes=search_of_quiz_date,user_id=user_id,user=user,question_counts=question_counts)
+        else:
+            return redirect(url_for("user_home",user_id=user_id))
+    return redirect(url_for("user_home",user_id=user_id))
 
 
-@app.route("/user_summary/<string:user>")
-def user_summary(user):
-    return render_template("1_user_summary.html",user=user)
-
-
+# userhome pe search lagana hai on the basis of chaptername and date
+@app.route("/search_user_score/<int:user_id>",methods=["GET","POST"])
+def user_score(user_id):
+    user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+    scores = Scores.query.filter_by(user_id=user_id).all()
+    if request.method == "POST":
+        search = request.form.get("search")
+        #chapter_name score of the user of a particular user_id
+        # search_of_scores=Scores.query.filter_by(user_id=user_id,chapter_name=search).all()
+        search_of_scores = Scores.query.filter(Scores.user_id == user_id,Scores.chapter_name.ilike(f"%{search}%")).all()
+        # search_of_scores=Scores.query.filter(Scores.chapter_name.contains(search)).all()
+        #search by date
+        search_of_scores_date=Scores.query.filter_by(user_id=user_id,date=search).all()
+        if search_of_scores:
+            return render_template("2_score.html",user=user,scores=search_of_scores,user_id=user_id)
+        elif search_of_scores_date:
+            return render_template("2_score.html",user=user,scores=search_of_scores_date,user_id=user_id)
+        else:
+            return redirect(url_for("user_score",user_id=user_id))
+    return render_template("2_score.html",user=user,scores=scores,user_id=user_id)
+        
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for('login'))
 
-
+@app.route("/dummy")
+def dummy():
+    return "this is dumb"
 
 app.run(debug=True)
