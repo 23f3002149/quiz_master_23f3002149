@@ -2,6 +2,7 @@
 #here we are going to create all data models with all the relationship ofprimary key and all other stuff
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()#here i am creating instance(object) of the database , Creating an instance of the database means setting up and initializing a specific database that can be used for storing and managing data.
 #In practical terms, it refers to:
@@ -129,7 +130,7 @@ class Scores(db.Model):
     user_id=db.Column(db.Integer, db.ForeignKey('admin_user_details.id'), nullable=False)
     score=db.Column(db.Integer, nullable=False)
     chapter_name=db.Column(db.String(80) , nullable=False)
-    date=db.Column(db.String(80), nullable=False)
+    date=db.Column(db.String(80), nullable=False)  # Auto-save current date
     no_of_questions=db.Column(db.Integer, nullable=False)
     #db.ForeignKey('quiz.quiz_id')from line no. 128
     #relations with other tables(foreign key)we will write later,haaa now it is written below
