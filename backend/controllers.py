@@ -445,40 +445,55 @@ def search_quiz():
             return render_template("2_admin_quiz.html",  quizes=quiz,chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
     return render_template("2_admin_quiz.html",  quizes=Quiz.query.all(),chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
 
+
+
+
 @app.route("/user_summary/<int:user_id>")
 def user_summary(user_id):
-    # Calculate user summary
-    # user = Admin_User_Details.query.get(session[user_id])
-    user=Admin_User_Details.query.filter_by(id=user_id).first()
-    user_name=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
-    scores = Scores.query.filter_by(user_id=user.id).all()
+    user = Admin_User_Details.query.filter_by(id=user_id).first()
+    user_name = user.Full_name if user else "Unknown User"
+    scores = Scores.query.filter_by(user_id=user.id).all() if user else []
+    
     total_quizzes = len(scores)
+    total_questions = sum(score.no_of_questions for score in scores) if scores else 0
+    total_correct = sum(score.score for score in scores) if scores else 0
+    total_incorrect = total_questions - total_correct if total_questions else 0
     avg_score = sum(score.score for score in scores) / total_quizzes if total_quizzes > 0 else 0
+
+    # Avoid plotting if no data
+    if scores:
+        dates = [score.date for score in scores]
+        scores_list = [score.score for score in scores]
+        plt.figure(figsize=(7, 4))
+        plt.plot(dates, scores_list, marker='o', linestyle='-', color='b')
+        plt.xlabel('Date')
+        plt.ylabel('Score')
+        plt.title('Performance Over Time')
+        String_user_id=str(user_id)
+        user_line_chart = "static/images/user_line_chart"+(String_user_id)+".png"
+        plt.savefig(user_line_chart)
+        plt.close()
+    else:
+        user_line_chart = None  # No chart if no scores
     
-    # Score trend over time (Line Chart)
-    dates = [score.date for score in scores]
-    scores_list = [score.score for score in scores]
-    plt.figure(figsize=(7, 4))
-    plt.plot(dates, scores_list, marker='o', linestyle='-', color='b')
-    plt.xlabel('Date')
-    plt.ylabel('Score')
-    plt.title('Performance Over Time')
-    user_line_chart = "static/images/user_line_chart.png"
-    plt.savefig(user_line_chart)
-    plt.close()
+    # Avoid pie chart error (Matplotlib can't plot empty pie)
+    if total_questions > 0:
+        plt.figure(figsize=(7, 4))
+        plt.pie(
+            [total_correct, total_incorrect], 
+            labels=['Correct', 'Incorrect'], 
+            autopct='%1.1f%%', 
+            colors=['green', 'red']
+        )
+        plt.title('Correct vs Incorrect Answers')
+        str_user_id=str(user_id)
+        user_pie_chart = "static/images/user_pie_chart"+(str_user_id)+".png"
+        plt.savefig(user_pie_chart)
+        plt.close()
+    else:
+        user_pie_chart = None  # No pie chart if no questions
     
-    # Correct vs Incorrect Answers (Pie Chart)
-    total_questions = sum(score.no_of_questions for score in scores)
-    total_correct = sum(score.score for score in scores)
-    total_incorrect = total_questions - total_correct
-    plt.figure(figsize=(7, 4))
-    plt.pie([total_correct, total_incorrect], labels=['Correct', 'Incorrect'], autopct='%1.1f%%', colors=['green', 'red'])
-    plt.title('Correct vs Incorrect Answers')
-    user_pie_chart = "static/images/user_pie_chart.png"
-    plt.savefig(user_pie_chart)
-    plt.close()
-    
-    return render_template("1_user_summary.html",user=user_name,user_id=user_id, total_quizzes=total_quizzes, avg_score=avg_score, user_line_chart=user_line_chart, user_pie_chart=user_pie_chart)
+    return render_template("1_user_summary.html",user=user_name,user_id=user_id,total_quizzes=total_quizzes,avg_score=avg_score,user_line_chart=user_line_chart,user_pie_chart=user_pie_chart)
 
 @app.route("/admin_summary")
 def admin_summary():
