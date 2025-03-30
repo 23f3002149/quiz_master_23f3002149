@@ -33,7 +33,7 @@ def setup_app():
 setup_app()
 #to run the app you can also write app=setup_app() without defining the global variable app
 
-from backend.controlers import *
+from backend.controllers import *
 
 
 if __name__ == '__main__':

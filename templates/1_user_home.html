@@ -38,6 +38,7 @@
                 </tr>
             </thead>
             <tbody>
+                {% if quizes %}
                 {% for quiz in quizes %}
                 <tr>
                     <td>{{quiz.chapter_name}}</td>
@@ -52,7 +53,11 @@
                     </td>
                 </tr>
                 {% endfor %}
-               
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center;" >No quizes found</td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td colspan="5" class="ellipsis">...</td>
                 </tr>

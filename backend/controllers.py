@@ -11,7 +11,7 @@ from datetime import datetime
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import os
+
 
 
 @app.route("/" , methods=["GET","POST"])#by default the method is get but if u want to post then u can write post
@@ -441,7 +441,8 @@ def search_quiz():
         quiz=search_of_quiz
         if quiz:
             return render_template("2_admin_quiz.html",  quizes=quiz,chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
-        return render_template("2_admin_quiz.html",  quizes=Quiz.query.all(),chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
+        else:
+            return render_template("2_admin_quiz.html",  quizes=quiz,chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
     return render_template("2_admin_quiz.html",  quizes=Quiz.query.all(),chapters=Chapters.query.all(), admin=Admin_User_Details.query.filter_by(role=0).first().Full_name)
 
 @app.route("/user_summary/<int:user_id>")
@@ -528,12 +529,14 @@ def search_user_home(user_id):
         #search by date
         search_of_quiz_date=Quiz.query.filter(Quiz.date_quiz.contains(search)).all()
         quiz=search_of_quiz
+        user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
+        
         if quiz:
-            user=Admin_User_Details.query.filter_by(id=user_id).first().Full_name
             subjects=Subjects.query.all()
             question_counts = {}
             subject=Subjects.query.all()
             chapter=Chapters.query.all()
+ 
             for subject in subjects:
                 for chapter in subject.chapters_of_a_subject_id:
                     count = Questions.query.filter_by(chapter_id=chapter.chapter_id).count()
@@ -552,7 +555,7 @@ def search_user_home(user_id):
                     question_counts[chapter.chapter_id] = count #
             return render_template("1_user_home.html",quizes=search_of_quiz_date,user_id=user_id,user=user,question_counts=question_counts)
         else:
-            return redirect(url_for("user_home",user_id=user_id))
+            return render_template("1_user_home.html",quizes=search_of_quiz,user_id=user_id,user=user)
     return redirect(url_for("user_home",user_id=user_id))
 
 
@@ -576,7 +579,7 @@ def user_score(user_id):
         elif search_of_scores_date:
             return render_template("2_score.html",user=user,scores=search_of_scores_date,user_id=user_id)
         else:
-            return redirect(url_for("user_score",user_id=user_id))
+            return render_template("2_score.html",user=user,scores=search_of_scores,user_id=user_id)
     return render_template("2_score.html",user=user,scores=scores,user_id=user_id)
         
 @app.route("/logout")
