@@ -568,7 +568,9 @@ def user_score(user_id):
         search_of_scores = Scores.query.filter(Scores.user_id == user_id,Scores.chapter_name.ilike(f"%{search}%")).all()
         # search_of_scores=Scores.query.filter(Scores.chapter_name.contains(search)).all()
         #search by date
-        search_of_scores_date=Scores.query.filter_by(user_id=user_id,date=search).all()
+        # search_of_scores_date=Scores.query.filter_by(user_id=user_id,date=search).all()
+        search_of_scores_date = Scores.query.filter(Scores.user_id == user_id,Scores.date.ilike(f"%{search}%")).all()
+
         if search_of_scores:
             return render_template("2_score.html",user=user,scores=search_of_scores,user_id=user_id)
         elif search_of_scores_date:
@@ -582,8 +584,6 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route("/dummy")
-def dummy():
-    return "this is dumb"
+
 
 app.run(debug=True)

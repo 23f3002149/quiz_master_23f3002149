@@ -103,10 +103,16 @@
             background-color: #f3f05bf9;
             color: #f50303;
             cursor: pointer;
+            border: 1px solid #f3f05bf9;
+            border-radius: 5px;
+            padding: 3px 6px;
         }
         .edt{
-            background-color: #5bc0f3f9;
-            color: #f50303;
+            /* background-color: #5bc0f3f9; */
+            background-color: #f50303;
+            border: 1px solid #ccc;
             cursor: pointer;
+            border-radius: 5px;
+            padding: 4px 7px;
         }
  

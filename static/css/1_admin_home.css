@@ -5,12 +5,17 @@
             padding: 0;
         }
         .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 97%;
             background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 1000;
             /* border-bottom: 2px solid #ccc; */
         }
         .header a {
@@ -35,12 +40,16 @@
         .content {
             padding: 20px;
             text-align: center;
+            padding-top: 60px;
            
         }
         .subject-container {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             gap: 20px;
+            max-width: 100%;
+            overflow: auto;
         }
         .subject-box {
             border: 2px solid #000;
@@ -77,8 +86,10 @@
             border-bottom: 1px solid #ccc;
         }
         .btn-chapter {
+
             margin-top: 10px;
-            background-color: #ff8080;
+            /* background-color: #ff8080; */
+            background-color: #35ef61;
             color: white;
             border: none;
             padding: 8px 15px;
@@ -90,29 +101,30 @@
             text-align: center;
         }
         .all-subjects {
+            display: flex;
+            border-radius: 5px;
+            padding: 8px 15px;
+            gap: 10px;
+            background-color: #f50360;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             margin-top: 20px;
             font-size: 18px;
-            color: blue;
+            /* color: blue; */
+            color: white;
             text-align: center;
             text-decoration: none;
         }
-        .add-btn {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background-color: orange;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            margin-top: 20px;
-            cursor: pointer;
-        }
+        
+        
+        
         .edit{
             background-color: #09f6d6cd;
             color: #f50303;
             cursor: pointer;
+            border-radius: 5px;
+            padding: 3px 6px;
+            border: 0.5px solid #09f6d6cd;
         }
        

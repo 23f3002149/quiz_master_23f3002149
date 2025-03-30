@@ -25,12 +25,7 @@
             text-decoration: underline;
         }
 
-        .header input[type="text"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
+       
         .welcome {
             font-weight: bold;
             color: #007bff;
@@ -51,54 +46,5 @@
             color: #ff8000;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f1f1f1;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-
-        .view-button {
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .view-button:hover {
-            opacity: 0.9;
-        }
-
-        .start-button {
-            padding: 5px 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .start-button:hover {
-            opacity: 0.9;
-        }
-
-        .ellipsis {
-            text-align: center;
-            color: #999;
-        }
-  
+        
+        
